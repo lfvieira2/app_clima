@@ -6,8 +6,7 @@ $(function(){
     // pegar coordenadas geográficas pelo nome da cidade: https://docs.mapbox.com/api/
     // pegar coordenadas do IP: http://www.geoplugin.net
     // gerar gráficos em JS: https://www.highcharts.com/demo
-    // https://www.mapbox.com/
-
+    // API para pegar localização: https://account.mapbox.com/
  
     //Key da API do accuweather
     var accuweatherAPIkey = "SuaAPIKeyAccuWeatherAqui";
