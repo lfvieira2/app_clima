@@ -6,9 +6,14 @@ $(function(){
     // pegar coordenadas geográficas pelo nome da cidade: https://docs.mapbox.com/api/
     // pegar coordenadas do IP: http://www.geoplugin.net
     // gerar gráficos em JS: https://www.highcharts.com/demo
+    // https://www.mapbox.com/
 
  
+    //Key da API do accuweather
     var accuweatherAPIkey = "";
+    //Key da API do mapbox
+    var mapboxToken = ""
+
     var weatherObject = {
         cidade: "",
         estado: "",
@@ -64,7 +69,7 @@ $(function(){
             type: "GET",
             dataType: "json",
             success: function(data){
-                console.log("hourly forecast:", data);
+                //console.log("hourly forecast:", data);
                 var horarios = [];
                 var temperaturas = [];
                 
@@ -75,10 +80,12 @@ $(function(){
                     temperaturas.push(data[a].Temperature.Value);
 
                     gerarGrafico(horarios, temperaturas);
+                    $('.refresh-loader').fadeOut();
                 }
             },
             error: function(){
-                console.log("Erro");
+                console.log("Erro hourly forecast");
+                gerarErro("Erro ao obter a previsão hora a hora");
             }
         });
     }
@@ -121,14 +128,15 @@ $(function(){
             type: "GET",
             dataType: "json",
             success: function(data){
-                console.log("5 day forecast:", data);
+                //console.log("5 day forecast:", data);
 
                 $("#texto_max_min").html(String(data.DailyForecasts[0].Temperature.Minimum.Value) + "&deg; / " + String(data.DailyForecasts[0].Temperature.Maximum.Value) + "&deg;");
                 
                 preencherPrevisao5Dias(data.DailyForecasts);
             },
             error: function(){
-                console.log("Erro");
+                console.log("Erro 5 day forecast");
+                gerarErro("Erro ao obter a previsão de 5 dias");
             }
         });
     }
@@ -139,7 +147,7 @@ $(function(){
             type: "GET",
             dataType: "json",
             success: function(data){
-                console.log("current position:", data);
+                //console.log("current conditions:", data);
 
                 weatherObject.temperatura = data[0].Temperature.Metric.Value;
                 weatherObject.texto_clima = data[0].WeatherText;
@@ -150,7 +158,8 @@ $(function(){
                 preencherClimaAgora(weatherObject.cidade, weatherObject.estado, weatherObject.pais, weatherObject.temperatura, weatherObject.texto_clima, weatherObject.icone_clima);
             },
             error: function(){
-                console.log("Erro");
+                console.log("Erro current conditions");
+                gerarErro("Erro ao obter clima atual");
             }
         });
     }
@@ -161,7 +170,7 @@ $(function(){
             type: "GET",
             dataType: "json",
             success: function(data){
-                console.log("geoposition:", data);
+                //console.log("geoposition:", data);
                 
                 try {
                     weatherObject.cidade = data.ParentCity.LocalizedName;
@@ -178,32 +187,102 @@ $(function(){
                 pegarPrevisaoHoraAHora(localCode);
             },
             error: function(){
-                console.log("Erro");
+                console.log("Erro geoposition");
+                gerarErro("Erro no código do local");
+            }
+        });
+    }
+
+    function pegarCoordenadasDaPesquisa(input) {
+        input = encodeURI(input);
+        $.ajax({
+            url : "https://api.mapbox.com/geocoding/v5/mapbox.places/" + input + ".json?access_token=" + mapboxToken,
+            type: "GET",
+            dataType: "json",
+            success: function(data){
+                //console.log("mapbox:", data);
+
+                try{
+                    var long = data.features[0].geometry.coordinates[0];
+                    var lat = data.features[0].geometry.coordinates[1];
+                    pegarLocalUsuario(lat, long);
+                } catch {
+                    gerarErro("Erro na pesquisa de local");
+                }
+            },
+            error: function(){  
+                console.log("Erro no mapbox");
+                gerarErro("Erro na pesquisa de local");
             }
         });
     }
 
     function pegarCoordenadasDoIP() {
-        var lat_padrao = -15.828028;
-        var long_padrao = -47.915409;
+        var lat_padrao = -22.981361;
+        var long_padrao = -43.223176;
 
         $.ajax({
-            url: "http://www.geoplugin.net/json.gp",
+            url : "http://www.geoplugin.net/json.gp",
             type: "GET",
             dataType: "json",
             success: function(data){
-                if(data.geoplugin_latitude && data.geoplugin_longitude){
-                    pegarLocalUsuario(data.geoplugin_latitude, data.geoplugin_longitude);
+                
+                if (data.geoplugin_latitude && data.geoplugin_longitude) {
+                    pegarLocalUsuario(data.geoplugin_latitude,data.geoplugin_longitude);
                 } else {
-                    pegarLocalUsuario(lat_padrao, long_padrao);
+                    pegarLocalUsuario(lat_padrao,long_padrao);
                 }
+
             },
             error: function(){
                 console.log("Erro");
-                pegarLocalUsuario(lat_padrao, long_padrao);
-            }
+                pegarLocalUsuario(lat_padrao,long_padrao);
+            
+            }  
         });
     }
 
-    //pegarCoordenadasDoIP();
+    function gerarErro(mensagem) {
+
+        if(!mensagem) {
+            mensagem = "Erro na solicitação";
+        }
+
+        $('.refresh-loader').hide();
+        $("#aviso-erro").text(mensagem);
+        $("#aviso-erro").slideDown();
+        window.setTimeout(function(){
+            $("#aviso-erro").slideUp();
+        },4000);
+
+
+    }
+
+    pegarCoordenadasDoIP();
+
+    $("#search-button").click(function(){
+        $('.refresh-loader').show();
+        var local = $("input#local").val();
+        if (local) {
+            pegarCoordenadasDaPesquisa(local);
+        } else {
+            alert('Local inválido');
+        }
+    });
+
+    $("input#local").on('keypress', function(e){
+        if(e.which == 13) {
+            $('.refresh-loader').show();
+            var local = $("input#local").val();
+            if (local) {
+                pegarCoordenadasDaPesquisa(local);
+            } else {
+                alert('Local inválido');
+            }
+        }
+    });
+
+
+
+
 });
