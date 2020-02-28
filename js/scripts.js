@@ -10,9 +10,9 @@ $(function(){
 
  
     //Key da API do accuweather
-    var accuweatherAPIkey = "";
+    var accuweatherAPIkey = "SuaAPIKeyAccuWeatherAqui";
     //Key da API do mapbox
-    var mapboxToken = ""
+    var mapboxToken = "SuaAPIKeyMapboxTokenAqui"
 
     var weatherObject = {
         cidade: "",
