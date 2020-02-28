@@ -1,0 +1,382 @@
+
+
+.global-page-container {
+    width: 100%;
+    display: inline-block;
+    margin: auto;
+    height: 100%;
+}
+
+.column {
+	padding-left: 8px;
+    padding-right: 8px;
+}
+
+.no-padding {
+    padding-right: 0;
+    padding-left: 0;
+}
+
+.table {
+    display: table;
+    height: 100%;
+    width: 100%;
+}
+
+.table-cell {
+    display: table-cell;
+    vertical-align: middle;
+    height: 100%;
+    width: 100%;
+}
+
+body.loading {
+    overflow: hidden;
+}
+
+
+.refresh-loader {
+    display: none;
+    z-index: 999;           
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    background-color: rgba(0,0,0,0.7);
+}
+
+.refresh-loader svg {
+    opacity: 1;
+    margin-left: auto;
+    width: 50px;
+    height: auto;
+}
+
+.refresh-loader svg path {
+    fill:#EEAE29;
+}
+
+@keyframes rotating {
+    from {
+        -ms-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        -ms-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+    }
+    .rotating {
+    -webkit-animation: rotating 0.7s linear infinite;
+    -moz-animation: rotating 0.7s linear infinite;
+    -ms-animation: rotating 0.7s linear infinite;
+    -o-animation: rotating 0.7s linear infinite;
+    animation: rotating 0.7s linear infinite;
+}
+
+
+
+
+#pesquisar {
+    text-align: center;
+    margin-top: 40px;
+
+    
+}
+
+#pesquisar .global-page-container {
+    
+}
+
+#pesquisar .pesquisar_inner {
+    position: relative;
+    margin-left: 15px;
+    
+}
+
+#pesquisar input {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #2d2d2d;
+    padding-left: 4px;
+    padding-right: 20px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 300;
+}
+
+#pesquisar input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #d2d2d2;
+    opacity: 1; /* Firefox */
+  }
+  
+  #pesquisar input:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #d2d2d2;
+  }
+  
+  #pesquisar input::-ms-input-placeholder { /* Microsoft Edge */
+    color: #d2d2d2;
+  }
+
+#pesquisar #search-button {
+
+    position: absolute;
+    z-index: 1;
+    right: 0px;
+    bottom: 1px;
+    width: 40px;
+    height: 40px;
+    background-image: url('../img/search.png');
+    background-size: auto 90%;
+    background-position: center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+#pesquisar input:focus {
+    outline: none;
+}
+
+#weatherinfo {
+    font-family: 'Nunito Sans', sans-serif;
+}
+
+#weatherinfo .row {
+    margin-left: 0;
+    margin-right: 0;
+}
+#weatherinfo .results {
+    width: 100%;
+    height: 100%;
+    padding: 50px 0;
+    background-color: white;
+    text-align: center;
+}
+
+#weatherinfo .results .city_name , 
+#weatherinfo .results .weather_result {
+    text-align: left;
+    font-size: 32px;
+}
+
+#weatherinfo .results .city_name {
+    font-size: 32px;
+    margin-bottom: 4px;
+    color: #2d2d2d;
+}
+
+#weatherinfo .results .weather_result {
+    font-size: 22px;
+    margin-bottom: 10px;
+    margin-top: 0;
+    color: #909090;
+
+}
+
+#weatherinfo .results .weather_icon, 
+#weatherinfo .results .temperature {
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+#weatherinfo .results .temperature {
+    font-size: 48px;
+    color: #2d2d2d;
+    font-weight: 600;
+}
+
+#weatherinfo .results .temperature .max_min_temp {
+    font-size: 14px;
+    color: #909090;
+    font-weight: 400;
+}
+
+
+
+#weatherinfo .results .temperature .row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+#weatherinfo .results .weather_charts {
+    display: flex;
+    justify-content: center;
+    align-items: bottom;
+}
+
+#weatherinfo .results .weather_charts .row {
+    width: 100%;
+}
+
+#weatherinfo .results .weather_charts .hourly_chart {
+    border: 1px solid lightgrey;
+    width: 100%;
+    height: 400px;
+    margin-bottom: 12px;
+}
+
+#weatherinfo .results .weather_charts .info_chart {
+    font-size: 14px;
+    padding: 4px 10px;
+    margin: auto 2px;
+    max-width: 50%;
+    border: 1px solid #e6e6e6;
+    cursor: pointer;
+}
+
+#weatherinfo .results .weather_charts .row > div.active {
+    background-color: #e6e6e6;
+    cursor: default;
+}
+
+#weatherinfo .results .hourly_chart
+ {
+    padding: 20px 0;
+}
+
+#weatherinfo .results .daily_info {
+    padding: 20px 0;
+}
+
+
+#weatherinfo .results .weather_icon {
+    /* background-image: url('../img/Clear.png'); */
+    width: 80px;
+    margin-left: 14px;
+    background-size: auto 50%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#weatherinfo .results .daily_info .day {
+    font-size: 14px;
+    padding: 2px;
+    max-width: 20%;
+}
+
+#weatherinfo .results .daily_info .day .day_inner {
+    padding: 2px;
+}
+
+#weatherinfo .results .daily_info .day.today .day_inner {
+    border: 1px solid lightgrey;
+}
+
+
+#weatherinfo .results .daily_info .day .daily_weather_icon {
+    padding-top: 50%;
+    /* background-image: url('../img/Rain.png'); */
+    background-size: auto 60%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#weatherinfo .results .daily_info .day .max_min_temp {
+    font-weight: 400;
+    color: #909090;
+    font-size: 11px;
+}
+
+
+
+
+
+
+
+/* **********************************************************************************************
+***********************************   MEDIA QUERIES   ******************************************* 
+********************************************************************************************** */
+
+
+/* Small Screens **************************************************************************** */
+/* max-width 640px ******************************************************************** */
+
+@media only screen and (max-width: 640px) {
+   
+    .global-page-container {
+        width: 100%;
+    }
+
+    #weatherinfo .results .daily_info .day {
+        font-size: 2.5vw;
+    }
+
+    #weatherinfo .results .daily_info .day {
+        min-width: 32%;
+        margin-bottom: 20px;
+    }
+
+    #pesquisar input {
+        font-size: 3.3vw;
+    }
+
+   
+} /*  End of small Screens */
+   
+   
+/*  Medium Screens ************************************************************************** */
+/* min-width 641px and max-width 1023px *********************************************** */
+
+@media only screen and (max-width: 768px) {
+   
+    #weatherinfo .results .weather_charts .hourly_chart {
+        margin: 20px auto;
+    }
+    
+
+} /*  End of Medium Screens */
+
+/*  Medium Screens ************************************************************************** */
+/* min-width 641px and max-width 1023px *********************************************** */
+
+@media only screen and (min-width: 641px) and (max-width: 1023px) {
+   
+    .global-page-container {
+        width: 100%;
+    }
+
+} /*  End of Medium Screens */
+   
+   
+   
+   
+/*  Large Screens *************************************************************************** */
+/* min-width 1024px and max-width 1440px ********************************************** */
+
+@media only screen and (min-width: 1024px) { 
+   
+    .global-page-container {
+        width: 1024px;
+    }
+
+    #pesquisar {
+        text-align: center;
+        margin-top: 50px;
+    }
+
+   
+} /*  End of Large Screens */
+   
+   
+   
+/*  Extra Large Screens ********************************************************************* */
+/* min-width 1441px ******************************************************************* */
+
+@media only screen and (min-width: 1441px) {
+   
+         
+} /*  End of Extra Large Screens */
